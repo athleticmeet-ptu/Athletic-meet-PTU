@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SportsApp.css";
 import axios from "axios";
-
+const apiUrl = import.meta.env.VITE_API_URL;
 function Relay() {
   const [collegeName, setCollegeName] = useState("Loading...");
   const [relayData, setRelayData] = useState({});
@@ -252,7 +252,7 @@ function Relay() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/relay/register", {
+      const response = await fetch(`{apiUrl}/relay/register`, {
         method: "POST",
         body: formData,
         credentials: "include",
