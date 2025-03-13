@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./SportsApp.css";
 import axios from "axios";
 
-
+const apiUrl = import.meta.env.VITE_API_URL;
 function SportsApp() {
   const [collegeName, setCollegeName] = useState("Loading...");
   const [athleteData, setAthleteData] = useState({});
@@ -328,7 +328,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
     }
 
     try {
-      const response = await fetch("http://localhost:5000/student/register", {
+      const response = await fetch(`{apiUrl}/student/register`, {
         method: "POST",
         body: formData,
         credentials: "include",
