@@ -331,7 +331,7 @@ const handleNavigation = (path) => {
           <button
             className="female-register-btn"
             onClick={() =>
-              (window.location.href = "http://localhost:5173/sportsapp-fields")
+              (window.location.href = "https://ptu.gndecathletix.games//sportsapp-fields")
             }
           >
             Male Sports Register
