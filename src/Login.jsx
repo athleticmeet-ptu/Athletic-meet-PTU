@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import leftLogo from "/logo1.png"; // Left Logo
 import rightLogo from "/logo2.png"; // Right Logo
-
+const apiUrl = import.meta.env.VITE_API_URL;
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +13,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch(`{apiUrl}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
