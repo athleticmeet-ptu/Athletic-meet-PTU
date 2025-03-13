@@ -375,7 +375,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
           <button
             className="female-register-btn"
             onClick={() =>
-              (window.location.href = "http://localhost:5173/female-sportsapp")
+              (window.location.href = "https://ptu.gndecathletix.games//female-sportsapp")
             }
           >
             Female Sports Register
