@@ -1,0 +1,270 @@
+/* General styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* General styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 30px;
+  background: linear-gradient(90deg, #0c2861, #264a9b);
+  color: #fff;
+  min-height: 70px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.college-name {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-buttons button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.nav-buttons button:hover {
+  transform: translateY(-2px);
+}
+
+.female-register-btn {
+  background: #ffcc00;
+  color: #333;
+}
+
+.logout-btn {
+  background: #ff4444;
+  color: #fff;
+}
+
+/* Background section */
+.background {
+  position: relative;
+  width: 100vw;
+  height: 50vh;
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("/track.jpg") center/cover no-repeat;
+  filter: blur(5px);
+  z-index: -1;
+}
+
+.hero {
+  text-align: center;
+  color: white;
+  position: relative;
+}
+
+
+
+.welcome-text {
+  font-size: 3.2rem;
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+/* Events Section */
+.events-container {
+  margin: 50px auto;
+  padding: 40px;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 40px;
+}
+
+/* Event Title */
+.event-title {
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #0c2861;
+}
+
+/* Athlete Form */
+.athlete-form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.athlete-form:hover {
+  transform: translateY(-5px);
+}
+
+.athlete-form h4 {
+  margin-bottom: 10px;
+  color: #0c2861;
+}
+
+.athlete-form input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  transition: border 0.3s ease-in-out;
+  margin-bottom: 5px;
+}
+
+.athlete-form input:focus {
+  outline: none;
+  border: 1px solid #0c2861;
+}
+
+.athlete-form input[type="file"] {
+  border: none;
+  background: #f1f1f1;
+  cursor: pointer;
+}
+
+/* Buttons */
+.skip-btn,
+.submit-btn {
+  padding: 15px 25px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-top: 10px;
+  display: block;
+}
+
+.skip-btn {
+  background: #ffc107;
+  color: #333;
+}
+
+.skip-btn:hover {
+  background: #e0a800;
+  transform: translateY(-2px);
+}
+
+.submit-btn {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.submit-btn:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+  background-color: #94d3a2;
+  cursor: not-allowed;
+}
+
+p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* Event Cards */
+.event-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+}
+
+.event-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.event-card select {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+/* Thank You Message */
+.events-container h2 {
+  text-align: center;
+  color: #28a745;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+/* Warnings */
+.warning-text {
+  color: #dc3545;
+  font-weight: 500;
+  margin-top: -10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .events-container {
+    padding: 20px;
+    margin: 20px;
+    grid-template-columns: 1fr;
+  }
+
+  .background {
+    height: 40vh;
+  }
+
+  .welcome-text {
+    font-size: 2.5rem;
+  }
+}
+
