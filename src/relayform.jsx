@@ -290,7 +290,7 @@ function Relay() {
           <button
             className="female-register-btn"
             onClick={() =>
-              (window.location.href = "http://localhost:5173/female-relayapp")
+              (window.location.href = "https://ptu.gndecathletix.games//female-relayapp")
             }
           >
             Female Sports Register
