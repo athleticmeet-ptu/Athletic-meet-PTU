@@ -322,7 +322,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
     }
 
     try {
-      const response = await fetch("http://localhost:5000/student/register", {
+      const response = await fetch(`${apiUrl}/student/register`, {
         method: "POST",
         body: formData,
         credentials: "include",
