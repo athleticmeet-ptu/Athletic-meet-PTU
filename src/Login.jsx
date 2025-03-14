@@ -9,7 +9,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
- const handleLogin = async (e) => {
+const handleLogin = async (e) => {
   e.preventDefault();
 
   try {
@@ -23,13 +23,17 @@ function Login() {
     const result = await response.json();
 
     if (response.ok && result.success) {
-      console.log("Login Response:", result); // Debugging ke liye
+      console.log("Login Response:", result); // ✅ Debugging API Response
 
-      // ✅ LocalStorage me collegeName & username save karo
+      // ✅ LocalStorage me values store karo
       localStorage.setItem("collegeName", result.user.collegeName);
       localStorage.setItem("username", result.user.username);
 
-      // ✅ Redirect after saving
+      // ✅ Check if values are stored
+      console.log("Saved College Name:", localStorage.getItem("collegeName"));
+      console.log("Saved Username:", localStorage.getItem("username"));
+
+      // ✅ Navigate after saving
       navigate(result.redirect || "/home");
     } else {
       alert(result.error || "Login failed. Please try again.");
@@ -39,6 +43,7 @@ function Login() {
     alert("Login failed. Please try again.");
   }
 };
+
 
 
 
