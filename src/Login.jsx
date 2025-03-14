@@ -22,27 +22,32 @@ const handleLogin = async (e) => {
 
     const result = await response.json();
 
+    console.log("Raw Login Response:", result); // ✅ API response debug
+
     if (response.ok && result.success) {
-      console.log("Login Response:", result); // ✅ Debugging API Response
+      if (result.user) {
+        console.log("Extracted User Data:", result.user); // ✅ Ensure user object exists
 
-      // ✅ LocalStorage me values store karo
-      localStorage.setItem("collegeName", result.user.collegeName);
-      localStorage.setItem("username", result.user.username);
+        localStorage.setItem("collegeName", result.user.collegeName);
+        localStorage.setItem("username", result.user.username);
 
-      // ✅ Check if values are stored
-      console.log("Saved College Name:", localStorage.getItem("collegeName"));
-      console.log("Saved Username:", localStorage.getItem("username"));
+        console.log("Saved College Name:", localStorage.getItem("collegeName"));
+        console.log("Saved Username:", localStorage.getItem("username"));
+      } else {
+        console.error("❌ User object missing in response");
+      }
 
-      // ✅ Navigate after saving
       navigate(result.redirect || "/home");
     } else {
+      console.error("❌ Login failed:", result.error);
       alert(result.error || "Login failed. Please try again.");
     }
   } catch (error) {
-    console.error("Login Error:", error);
+    console.error("❌ Login Error:", error);
     alert("Login failed. Please try again.");
   }
 };
+
 
 
 
