@@ -50,19 +50,22 @@ const apiUrl = import.meta.env.VITE_API_URL;
   const events = maleEvents;
   const currentEvent = events[currentEventIndex];
 
-  // Fetch college info on mount
-  useEffect(() => {
-    fetch(`${apiUrl}/user-info`, { credentials: "include" })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.collegeName) {
-          setCollegeName(data.collegeName);
-        } else {
-          navigate("/");
-        }
-      })
-      .catch(() => navigate("/"));
-  }, [navigate]);
+const savedCollegeName = localStorage.getItem("collegeName");
+if (savedCollegeName) {
+  setCollegeName(savedCollegeName);
+} else {
+  fetch(`${apiUrl}/user-info`, { credentials: "include" })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.collegeName) {
+        setCollegeName(data.collegeName);
+        localStorage.setItem("collegeName", data.collegeName); // Update localStorage
+      } else {
+        navigate("/");
+      }
+    })
+    .catch(() => navigate("/"));
+}
 
   // Move to the next unlocked event
   const goToNextUnlockedEvent = async () => {
