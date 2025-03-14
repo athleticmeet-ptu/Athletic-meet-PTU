@@ -24,31 +24,47 @@ function Relay() {
 
   const currentRelayEvent = relayEvents[currentEventIndex];
 
-  // Fetch college name on mount
-  useEffect(() => {
+ useEffect(() => {
+  const savedCollegeName = localStorage.getItem("collegeName");
+  
+  if (savedCollegeName) {
+    console.log("Using College Name from Local Storage");
+    setCollegeName(savedCollegeName);
+  } else {
+    console.log("Fetching College Name from API");
     fetch(`${apiUrl}/user-info`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         if (data.collegeName) {
           setCollegeName(data.collegeName);
+          localStorage.setItem("collegeName", data.collegeName);
         } else {
           navigate("/");
         }
       })
-      .catch(() => navigate("/"));
-  }, [navigate]);
+      .catch((err) => {
+        console.error("Fetch Error:", err);
+        navigate("/");
+      });
+  }
+}, [navigate]);
 
   // Move to next unlocked event
   const goToNextUnlockedEvent = async () => {
+    const collegeName = localStorage.getItem("collegeName");
+    const username = localStorage.getItem("username"); // ✅ Get username
     let nextIndex = currentEventIndex + 1;
 
     while (nextIndex < relayEvents.length) {
       const event = relayEvents[nextIndex];
       try {
-        const res = await axios.get(
-          `${apiUrl}/relay/relay-status/${event}`,
-          { withCredentials: true }
-        );
+        const res = await axios.get(`${apiUrl}/relay/relay-status/${event}`, {
+        withCredentials: true,
+        headers: {
+          collegeName,
+          username, // ✅ Send username in headers
+        },
+      });
 
         if (res.data.status !== "locked") {
           setCurrentEventIndex(nextIndex);
@@ -74,11 +90,16 @@ function Relay() {
     }
 
     const checkCurrentEventLock = async () => {
+      const collegeName = localStorage.getItem("collegeName");
+    const username = localStorage.getItem("username"); // ✅ Get username
       try {
-        const res = await axios.get(
-          `${apiUrl}/relay/relay-status/${currentRelayEvent}`,
-          { withCredentials: true }
-        );
+        const res = await axios.get(`${apiUrl}/relay/relay-status/${currentRelayEvent}`, {
+        withCredentials: true,
+        headers: {
+          collegeName,
+          username, // ✅ Send username in headers
+        },
+      });
 
         if (res.data.status === "locked") {
           setIsLocked(true);
@@ -252,11 +273,17 @@ function Relay() {
     }
 
     try {
-      const response = await fetch(`{apiUrl}/relay/register`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
+      const response = await fetch(`${apiUrl}/relay/register`, {
+  method: "POST",
+  body: formData,
+  credentials: "include",
+  headers: {
+    collegename: localStorage.getItem("collegeName") || "",
+    username: localStorage.getItem("username") || "",
+  },
+});
+
+      
 
       const result = await response.json();
       if (result.success) {
