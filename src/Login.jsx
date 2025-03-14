@@ -10,28 +10,30 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const response = await fetch(`${apiUrl}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ username, password }),
-      });
+  try {
+    const response = await fetch(`${apiUrl}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ username, password }),
+    });
 
-      const result = await response.json();
+    const result = await response.json();
 
-      if (response.ok && result.success) {
-        navigate("/home");
-      } else {
-        alert(result.error || "Login failed. Please try again.");
-      }
-    } catch (error) {
-      console.error("Login Error:", error);
-      alert("Login failed. Please try again.");
+    if (response.ok && result.success) {
+      localStorage.setItem("collegeName", result.user.collegeName);
+      navigate("/home");
+    } else {
+      alert(result.error || "Login failed. Please try again.");
     }
-  };
+  } catch (error) {
+    console.error("Login Error:", error);
+    alert("Login failed. Please try again.");
+  }
+};
+
 
   return (
     <div className="login-container">
