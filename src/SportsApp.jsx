@@ -350,7 +350,7 @@ useEffect(() => {
     }
 
     try {
-      const response = await fetch(`{apiUrl}/student/register`, {
+      const response = await fetch(`${apiUrl}/student/register`, {
         method: "POST",
         body: formData,
         credentials: "include",
