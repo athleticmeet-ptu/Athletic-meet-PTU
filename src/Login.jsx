@@ -9,7 +9,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+ const handleLogin = async (e) => {
   e.preventDefault();
 
   try {
@@ -23,8 +23,14 @@ function Login() {
     const result = await response.json();
 
     if (response.ok && result.success) {
+      console.log("Login Response:", result); // Debugging ke liye
+
+      // ✅ LocalStorage me collegeName & username save karo
       localStorage.setItem("collegeName", result.user.collegeName);
-      navigate("/home");
+      localStorage.setItem("username", result.user.username);
+
+      // ✅ Redirect after saving
+      navigate(result.redirect || "/home");
     } else {
       alert(result.error || "Login failed. Please try again.");
     }
@@ -33,6 +39,7 @@ function Login() {
     alert("Login failed. Please try again.");
   }
 };
+
 
 
   return (
