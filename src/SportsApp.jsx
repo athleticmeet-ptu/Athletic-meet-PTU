@@ -50,22 +50,31 @@ const apiUrl = import.meta.env.VITE_API_URL;
   const events = maleEvents;
   const currentEvent = events[currentEventIndex];
 
-const savedCollegeName = localStorage.getItem("collegeName");
-if (savedCollegeName) {
-  setCollegeName(savedCollegeName);
-} else {
-  fetch(`${apiUrl}/user-info`, { credentials: "include" })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.collegeName) {
-        setCollegeName(data.collegeName);
-        localStorage.setItem("collegeName", data.collegeName); // Update localStorage
-      } else {
+useEffect(() => {
+  const savedCollegeName = localStorage.getItem("collegeName");
+  
+  if (savedCollegeName) {
+    console.log("Using College Name from Local Storage");
+    setCollegeName(savedCollegeName);
+  } else {
+    console.log("Fetching College Name from API");
+    fetch(`${apiUrl}/user-info`, { credentials: "include" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.collegeName) {
+          setCollegeName(data.collegeName);
+          localStorage.setItem("collegeName", data.collegeName);
+        } else {
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        console.error("Fetch Error:", err);
         navigate("/");
-      }
-    })
-    .catch(() => navigate("/"));
-}
+      });
+  }
+}, [navigate]);
+
 
   // Move to the next unlocked event
   const goToNextUnlockedEvent = async () => {
