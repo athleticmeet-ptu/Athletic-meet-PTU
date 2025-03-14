@@ -77,20 +77,21 @@ useEffect(() => {
 
 
   // Move to the next unlocked event
-  const goToNextUnlockedEvent = async () => {
+ const goToNextUnlockedEvent = async () => {
   let nextIndex = currentEventIndex + 1;
   const collegeName = localStorage.getItem("collegeName");
+  const username = localStorage.getItem("username"); // ✅ Get username
 
   while (nextIndex < events.length) {
     const event = events[nextIndex];
     try {
-      const res = await axios.get(
-        `${apiUrl}/student/event-status/${event}`,
-        {
-          withCredentials: true,
-          headers: { collegeName }, // Send collegeName from localStorage
-        }
-      );
+      const res = await axios.get(`${apiUrl}/student/event-status/${event}`, {
+        withCredentials: true,
+        headers: {
+          collegeName,
+          username, // ✅ Send username in headers
+        },
+      });
 
       if (res.data.status !== "locked") {
         setCurrentEventIndex(nextIndex);
@@ -105,7 +106,7 @@ useEffect(() => {
     }
   }
 
-  setIsSubmitted(true);
+  setIsSubmitted(true); // ✅ Stop condition if all events are locked
 };
 
 // Check lock status for current event
@@ -117,14 +118,15 @@ useEffect(() => {
 
   const checkCurrentEventLock = async () => {
     const collegeName = localStorage.getItem("collegeName");
+    const username = localStorage.getItem("username"); // ✅ Get username
     try {
-      const res = await axios.get(
-        `${apiUrl}/student/event-status/${currentEvent}`,
-        {
-          withCredentials: true,
-          headers: { collegeName }, // Send collegeName from localStorage
-        }
-      );
+      const res = await axios.get(`${apiUrl}/student/event-status/${currentEvent}`, {
+        withCredentials: true,
+        headers: {
+          collegeName,
+          username, // ✅ Send username in headers
+        },
+      });
 
       if (res.data.status === "locked") {
         setIsLocked(true);
@@ -140,7 +142,8 @@ useEffect(() => {
   };
 
   checkCurrentEventLock();
-}, [currentEvent]);
+}, [currentEvent]); // ✅ Ensures `useEffect` is optimized
+
 
   const handleLogout = async () => {
     await fetch(`${apiUrl}/logout`, { credentials: "include" });
