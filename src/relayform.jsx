@@ -177,7 +177,7 @@ function Relay() {
         console.error("Error checking URN:", err);
       }
     }
-  };
+  }
 
   const validateFields = (student) => {
     if (
