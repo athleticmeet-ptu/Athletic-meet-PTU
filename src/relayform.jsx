@@ -89,33 +89,38 @@ function Relay() {
       return;
     }
 
-    const checkCurrentEventLock = async () => {
-      const collegeName = localStorage.getItem("collegeName");
-    const username = localStorage.getItem("username"); // ✅ Get username
-      try {
-        const res = await axios.get(`${apiUrl}/relay/relay-status/${currentRelayEvent}`, {
+    useEffect(() => {
+  const checkCurrentEventLock = async () => {
+    const collegeName = localStorage.getItem("collegeName");
+    const username = localStorage.getItem("username");
+
+    try {
+      const res = await axios.get(`${apiUrl}/relay/relay-status/${currentRelayEvent}`, {
         withCredentials: true,
         headers: {
           collegeName,
-          username, // ✅ Send username in headers
+          username,
         },
       });
 
-        if (res.data.status === "locked") {
-          setIsLocked(true);
-          setTimeout(() => {
-            goToNextUnlockedEvent();
-          }, 2000);
-        } else {
-          setIsLocked(false);
-        }
-      } catch (err) {
-        console.error("Error checking lock status:", err);
+      if (res.data.status === "locked") {
+        setIsLocked(true);
+        setTimeout(() => {
+          goToNextUnlockedEvent();
+        }, 2000);
+      } else {
+        setIsLocked(false);
       }
-    };
+    } catch (err) {
+      console.error("Error checking lock status:", err);
+    } finally {
+      console.log("Lock check completed."); // Add a final execution block if needed
+    }
+  };
 
-    checkCurrentEventLock();
-  }, [currentRelayEvent]);
+  checkCurrentEventLock();
+}, [currentRelayEvent]);
+
 
   const handleLogout = async () => {
     await fetch(`${apiUrl}/logout`, { credentials: "include" });
