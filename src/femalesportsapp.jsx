@@ -109,11 +109,12 @@ const handleNavigation = (path) => {
       return;
     }
 
-    const checkCurrentEventLock = async () => {
-      try {
-        const collegeName = localStorage.getItem("collegeName");
-    const username = localStorage.getItem("username"); // ✅ Get username
+   useEffect(() => {
+  const checkCurrentEventLock = async () => {
     try {
+      const collegeName = localStorage.getItem("collegeName");
+      const username = localStorage.getItem("username"); // ✅ Get username
+
       const res = await axios.get(`${apiUrl}/student/event-status/${currentEvent}`, {
         withCredentials: true,
         headers: {
@@ -122,21 +123,23 @@ const handleNavigation = (path) => {
         },
       });
 
-        if (res.data.status === "locked") {
-          setIsLocked(true);
-          setTimeout(() => {
-            goToNextUnlockedEvent();
-          }, 2000);
-        } else {
-          setIsLocked(false);
-        }
-      } catch (err) {
-        console.error("Error checking lock status:", err);
+      if (res.data.status === "locked") {
+        setIsLocked(true);
+        setTimeout(() => {
+          goToNextUnlockedEvent();
+        }, 2000);
+      } else {
+        setIsLocked(false);
       }
-    };
+    } catch (err) {
+      console.error("Error checking lock status:", err);
+    }
+  };
 
-    checkCurrentEventLock();
-  }, [currentEvent]);
+  checkCurrentEventLock(); // ✅ Call the function
+
+}, [currentEvent]); // ✅ Correct dependency array
+
 
   const validateFields = (student1) => {
     if (
