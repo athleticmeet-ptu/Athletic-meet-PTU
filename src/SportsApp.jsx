@@ -350,11 +350,16 @@ useEffect(() => {
     }
 
     try {
-      const response = await fetch(`${apiUrl}/student/register`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
+     const response = await fetch(`${apiUrl}/student/register`, {
+  method: "POST",
+  body: formData,
+  credentials: "include",
+  headers: {
+    collegename: localStorage.getItem("collegeName") || "",
+    username: localStorage.getItem("username") || "",
+  },
+});
+
 
       const result = await response.json();
 
