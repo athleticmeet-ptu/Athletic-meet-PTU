@@ -71,14 +71,15 @@ useEffect(() => {
 }, [navigate]);
 
   // Move to the next unlocked event
-  const goToNextUnlockedEvent = async () => {
+   const goToNextUnlockedEvent = async () => {
+  let nextIndex = currentEventIndex + 1;
+  const collegeName = localStorage.getItem("collegeName");
+  const username = localStorage.getItem("username"); // ✅ Get username
 
-    let nextIndex = currentEventIndex + 1;
-
-    while (nextIndex < events.length) {
-      const event = events[nextIndex];
-      try {
-       const res = await axios.get(`${apiUrl}/student/event-status/${event}`, {
+  while (nextIndex < events.length) {
+    const event = events[nextIndex];
+    try {
+      const res = await axios.get(`${apiUrl}/student/event-status/${event}`, {
         withCredentials: true,
         headers: {
           collegeName,
@@ -86,38 +87,39 @@ useEffect(() => {
         },
       });
 
-        if (res.data.status !== "locked") {
-          setCurrentEventIndex(nextIndex);
-          setIsLocked(false);
-          return;
-        } else {
-          nextIndex++;
-        }
-      } catch (err) {
-        console.error("Error checking lock status:", err);
+      if (res.data.status !== "locked") {
+        setCurrentEventIndex(nextIndex);
+        setIsLocked(false);
+        return;
+      } else {
         nextIndex++;
       }
+    } catch (err) {
+      console.error("Error checking lock status:", err);
+      nextIndex++;
     }
+  }
 
+  setIsSubmitted(true); // ✅ Stop condition if all events are locked
+};
+
+// Check lock status for current event
+useEffect(() => {
+  if (!currentEvent) {
     setIsSubmitted(true);
-  };
+    return;
+  }
 
-  // Check lock status for current event
-  useEffect(() => {
-    if (!currentEvent) {
-      setIsSubmitted(true);
-      return;
-    }
-
-   useEffect(() => {
   const checkCurrentEventLock = async () => {
+    const collegeName = localStorage.getItem("collegeName");
+    const username = localStorage.getItem("username"); // ✅ Get username
     try {
-      const collegeName = localStorage.getItem("collegeName");
-      const username = localStorage.getItem("username"); 
-      
       const res = await axios.get(`${apiUrl}/student/event-status/${currentEvent}`, {
         withCredentials: true,
-        headers: { collegeName, username },
+        headers: {
+          collegeName,
+          username, // ✅ Send username in headers
+        },
       });
 
       if (res.data.status === "locked") {
@@ -131,12 +133,10 @@ useEffect(() => {
     } catch (err) {
       console.error("Error checking lock status:", err);
     }
-  }; 
+  };
 
-  checkCurrentEventLock(); // ✅ Function ko call karna zaroori hai
-
-}, [currentEvent]); // ✅ Ensure proper closing
-
+  checkCurrentEventLock();
+}, [currentEvent]); 
 
   const handleLogout = async () => {
     await fetch(`${apiUrl}/logout`, { credentials: "include" });
