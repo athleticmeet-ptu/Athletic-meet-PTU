@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SportsApp.css";
 import axios from "axios";
-const apiUrl = import.meta.env.VITE_API_URL;
 function Relay() {
   const [collegeName, setCollegeName] = useState("Loading...");
   const [relayData, setRelayData] = useState({});
@@ -89,7 +88,7 @@ function Relay() {
       return;
     }
 
-    useEffect(() => {
+   useEffect(() => {
   const checkCurrentEventLock = async () => {
     const collegeName = localStorage.getItem("collegeName");
     const username = localStorage.getItem("username");
@@ -113,8 +112,6 @@ function Relay() {
       }
     } catch (err) {
       console.error("Error checking lock status:", err);
-    } finally {
-      console.log("Lock check completed."); // Add a final execution block if needed
     }
   };
 
