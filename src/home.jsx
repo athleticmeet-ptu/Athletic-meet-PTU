@@ -89,22 +89,22 @@ function Home() {
       <section className="event-buttons">
         <h2>Select Your Event</h2>
         <div className="buttons-container">
-          <button className="event-button" onClick={() => handleNavigation("/sportsApp")}>
+          <button className="event-button" onClick={() => handleNavigation("https://ptu.gndecathletix.games/sportsApp")}>
             Male Track Events
           </button>
-          <button className="event-button" onClick={() => handleNavigation("/female-sportsapp")}>
+          <button className="event-button" onClick={() => handleNavigation("https://ptu.gndecathletix.games/female-sportsapp")}>
             Female Track Events
           </button>
-          <button className="event-button" onClick={() => handleNavigation("/sportsApp-fields")}>
+          <button className="event-button" onClick={() => handleNavigation("https://ptu.gndecathletix.games/sportsApp-fields")}>
             Male Field Events
           </button>
-          <button className="event-button" onClick={() => handleNavigation("/female-sportsapp-fields")}>
+          <button className="event-button" onClick={() => handleNavigation("https://ptu.gndecathletix.games/female-sportsapp-fields")}>
             Female Field Events
           </button>
-          <button className="event-button" onClick={() => handleNavigation("/relayapp")}>
+          <button className="event-button" onClick={() => handleNavigation("https://ptu.gndecathletix.games/relayapp")}>
             Male Relay
           </button>
-          <button className="event-button" onClick={() => handleNavigation("/female-relayapp")}>
+          <button className="event-button" onClick={() => handleNavigation("https://ptu.gndecathletix.games/female-relayapp")}>
             Female Relay
           </button>
         </div>
