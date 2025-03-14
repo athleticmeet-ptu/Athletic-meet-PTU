@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SportsApp.css";
 import axios from "axios";
-const apiUrl = import.meta.env.VITE_API_URL;
 function SportsAppfemale() {
   const [collegeName, setCollegeName] = useState("Loading...");
   const [athleteData, setAthleteData] = useState({});
@@ -40,30 +39,18 @@ const handleNavigation = (path) => {
   const events = femaleEvents;
   const currentEvent = events[currentEventIndex];
 
-useEffect(() => {
-  const savedCollegeName = localStorage.getItem("collegeName");
-  
-  if (savedCollegeName) {
-    console.log("Using College Name from Local Storage");
-    setCollegeName(savedCollegeName);
-  } else {
-    console.log("Fetching College Name from API");
+  useEffect(() => {
     fetch(`${apiUrl}/user-info`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         if (data.collegeName) {
           setCollegeName(data.collegeName);
-          localStorage.setItem("collegeName", data.collegeName);
         } else {
           navigate("/");
         }
       })
-      .catch((err) => {
-        console.error("Fetch Error:", err);
-        navigate("/");
-      });
-  }
-}, [navigate]);
+      .catch(() => navigate("/"));
+  }, [navigate]);
 
   const handleLogout = async () => {
     await fetch(`${apiUrl}/logout`, { credentials: "include" });
@@ -71,20 +58,15 @@ useEffect(() => {
   };
 
   const goToNextUnlockedEvent = async () => {
-     let nextIndex = currentEventIndex + 1;
-  const collegeName = localStorage.getItem("collegeName");
-  const username = localStorage.getItem("username"); // ✅ Get username
+    let nextIndex = currentEventIndex + 1;
 
-  while (nextIndex < events.length) {
-    const event = events[nextIndex];
-    try {
-      const res = await axios.get(`${apiUrl}/student/event-status/${event}`, {
-        withCredentials: true,
-        headers: {
-          collegeName,
-          username, // ✅ Send username in headers
-        },
-      });
+    while (nextIndex < events.length) {
+      const event = events[nextIndex];
+      try {
+        const res = await axios.get(
+          `${apiUrl}/student/event-status/${event}`,
+          { withCredentials: true }
+        );
 
         if (res.data.status !== "locked") {
           setCurrentEventIndex(nextIndex);
@@ -109,16 +91,11 @@ useEffect(() => {
     }
 
     const checkCurrentEventLock = async () => {
-      const collegeName = localStorage.getItem("collegeName");
-    const username = localStorage.getItem("username"); // ✅ Get username
-    try {
-      const res = await axios.get(`${apiUrl}/student/event-status/${currentEvent}`, {
-        withCredentials: true,
-        headers: {
-          collegeName,
-          username, // ✅ Send username in headers
-        },
-      });
+      try {
+        const res = await axios.get(
+          `${apiUrl}/student/event-status/${currentEvent}`,
+          { withCredentials: true }
+        );
 
         if (res.data.status === "locked") {
           setIsLocked(true);
@@ -169,7 +146,7 @@ useEffect(() => {
     }
     return true;
   };
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const checkUrnRegistrationCount = async (urn, studentKey) => {
     if (!urn) {
       setUrnWarnings((prev) => ({ ...prev, [studentKey]: "" }));
@@ -312,15 +289,11 @@ useEffect(() => {
     }
 
     try {
-        const response = await fetch(`${apiUrl}/student/register`, {
-  method: "POST",
-  body: formData,
-  credentials: "include",
-  headers: {
-    collegename: localStorage.getItem("collegeName") || "",
-    username: localStorage.getItem("username") || "",
-  },
-});
+      const response = await fetch(`${apiUrl}/student/register`, {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
 
       const result = await response.json();
 
