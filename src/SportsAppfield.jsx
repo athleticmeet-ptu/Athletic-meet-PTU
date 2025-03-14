@@ -109,34 +109,34 @@ useEffect(() => {
       return;
     }
 
-    const checkCurrentEventLock = async () => {
-      try {
-         const collegeName = localStorage.getItem("collegeName");
-    const username = localStorage.getItem("username"); // ✅ Get username
+   useEffect(() => {
+  const checkCurrentEventLock = async () => {
     try {
+      const collegeName = localStorage.getItem("collegeName");
+      const username = localStorage.getItem("username"); 
+      
       const res = await axios.get(`${apiUrl}/student/event-status/${currentEvent}`, {
         withCredentials: true,
-        headers: {
-          collegeName,
-          username, // ✅ Send username in headers
-        },
+        headers: { collegeName, username },
       });
 
-        if (res.data.status === "locked") {
-          setIsLocked(true);
-          setTimeout(() => {
-            goToNextUnlockedEvent();
-          }, 2000);
-        } else {
-          setIsLocked(false);
-        }
-      } catch (err) {
-        console.error("Error checking lock status:", err);
+      if (res.data.status === "locked") {
+        setIsLocked(true);
+        setTimeout(() => {
+          goToNextUnlockedEvent();
+        }, 2000);
+      } else {
+        setIsLocked(false);
       }
-    };
+    } catch (err) {
+      console.error("Error checking lock status:", err);
+    }
+  }; 
 
-    checkCurrentEventLock();
-  }, [currentEvent]);
+  checkCurrentEventLock(); // ✅ Function ko call karna zaroori hai
+
+}, [currentEvent]); // ✅ Ensure proper closing
+
 
   const handleLogout = async () => {
     await fetch(`${apiUrl}/logout`, { credentials: "include" });
