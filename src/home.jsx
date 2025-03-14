@@ -55,9 +55,10 @@ function Home() {
     navigate("/");
   };
 
-  const openInNewTab = (path) => {
-    window.open(`https://ptu.gndecathletix.games${path}`, "_blank");
-  };
+ const openInSameTab = (path) => {
+  window.location.href = `https://ptu.gndecathletix.games${path}`;
+};
+
 
   return (
     <div className="home-container">
@@ -85,22 +86,22 @@ function Home() {
       <section className="event-buttons">
         <h2>Select Your Event</h2>
         <div className="buttons-container">
-          <button className="event-button" onClick={() => openInNewTab("/sportsApp")}>
+          <button className="event-button" onClick={() => openInSameTab("/sportsApp")}>
             Male Track Events
           </button>
-          <button className="event-button" onClick={() => openInNewTab("/female-sportsapp")}>
+          <button className="event-button" onClick={() => openInSameTab("/female-sportsapp")}>
             Female Track Events
           </button>
-          <button className="event-button" onClick={() => openInNewTab("/sportsApp-fields")}>
+          <button className="event-button" onClick={() => openInSameTab("/sportsApp-fields")}>
             Male Field Events
           </button>
-          <button className="event-button" onClick={() => openInNewTab("/female-sportsapp-fields")}>
+          <button className="event-button" onClick={() => openInSameTab("/female-sportsapp-fields")}>
             Female Field Events
           </button>
-          <button className="event-button" onClick={() => openInNewTab("/relayapp")}>
+          <button className="event-button" onClick={() => openInSameTab("/relayapp")}>
             Male Relay
           </button>
-          <button className="event-button" onClick={() => openInNewTab("/female-relayapp")}>
+          <button className="event-button" onClick={() => openInSameTab("/female-relayapp")}>
             Female Relay
           </button>
         </div>
