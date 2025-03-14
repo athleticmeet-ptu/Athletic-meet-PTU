@@ -12,36 +12,26 @@ function Login() {
 const handleLogin = async (e) => {
   e.preventDefault();
 
-  console.log("🚀 handleLogin triggered!"); // ✅ Check if function runs
-
   try {
     const response = await fetch(`${apiUrl}/login`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include", // ✅ Ensures cookies are sent (important for sessions)
+      mode: "cors", // ✅ Allows cross-origin requests
       body: JSON.stringify({ username, password }),
     });
 
     const result = await response.json();
-
-    console.log("Raw Login Response:", result); // ✅ API response debug
+    console.log("Login Response:", result);
 
     if (response.ok && result.success) {
-      if (result.user) {
-        console.log("Extracted User Data:", result.user); // ✅ Ensure user object exists
-
-        localStorage.setItem("collegeName", result.user.collegeName);
-        localStorage.setItem("username", result.user.username);
-
-        console.log("Saved College Name:", localStorage.getItem("collegeName"));
-        console.log("Saved Username:", localStorage.getItem("username"));
-      } else {
-        console.error("❌ User object missing in response");
-      }
+      localStorage.setItem("collegeName", result.user.collegeName || "");
+      localStorage.setItem("username", result.user.username || "");
 
       navigate(result.redirect || "/home");
     } else {
-      console.error("❌ Login failed:", result.error);
       alert(result.error || "Login failed. Please try again.");
     }
   } catch (error) {
