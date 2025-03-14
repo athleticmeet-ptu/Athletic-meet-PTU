@@ -66,7 +66,10 @@ const handleLogin = async (e) => {
       {/* Login Card */}
       <div className="login-card">
         <h2 className="login-title">Welcome to Registration</h2>
-        <form onSubmit={handleLogin} className="login-form">
+        <form onSubmit={(e) => { 
+  console.log("🔥 Form Submitted!"); // ✅ Check if form submission happens
+  handleLogin(e);
+}} className="login-form">
           <input
             type="text"
             placeholder="Username"
