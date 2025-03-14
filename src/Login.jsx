@@ -12,6 +12,8 @@ function Login() {
 const handleLogin = async (e) => {
   e.preventDefault();
 
+  console.log("🚀 handleLogin triggered!"); // ✅ Check if function runs
+
   try {
     const response = await fetch(`${apiUrl}/login`, {
       method: "POST",
