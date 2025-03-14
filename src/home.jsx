@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import "./home.css";
 
-
 const apiUrl = import.meta.env.VITE_API_URL;
 const developers = [
   {
@@ -48,69 +47,65 @@ const developers = [
   },
 ];
 
-
-
 function Home() {
   const navigate = useNavigate();
+  
   const handleLogout = async () => {
     await fetch(`${apiUrl}/logout`, { credentials: "include" });
     navigate("/");
   };
-  const handleNavigation = (path) => {
-    navigate(path);
+
+  const openInNewTab = (path) => {
+    window.open(`https://ptu.gndecathletix.games${path}`, "_blank");
   };
 
   return (
     <div className="home-container">
-      {/* Navbar */}
       <header className="header">
         <nav className="navbar">
           <h1 className="logo">26th IKGPTU Athletic Meet</h1>
           <ul className="nav-list">
-              <button className="contact" onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
-            contact
-          </button>
+            <button className="contact" onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
+              Contact
+            </button>
             <li>
-            <button className="logout-btn" onClick={handleLogout}>
-            Logout
-          </button>
+              <button className="logout-btn" onClick={handleLogout}>
+                Logout
+              </button>
             </li>
           </ul>
         </nav>
       </header>
 
-      {/* Hero Section */}
       <div className="hero">
         <h1>26th IKGPTU Athletic Meet</h1>
-        <p>At Guru Nanak Dev Engineering Ceollege</p>
+        <p>At Guru Nanak Dev Engineering College</p>
       </div>
 
-      {/* Event Buttons */}
       <section className="event-buttons">
         <h2>Select Your Event</h2>
         <div className="buttons-container">
-          <button className="event-button" onClick={() => handleNavigation("/sportsApp")}>
+          <button className="event-button" onClick={() => openInNewTab("/sportsApp")}>
             Male Track Events
           </button>
-          <button className="event-button" onClick={() => handleNavigation("/female-sportsapp")}>
+          <button className="event-button" onClick={() => openInNewTab("/female-sportsapp")}>
             Female Track Events
           </button>
-          <button className="event-button" onClick={() => handleNavigation("/sportsApp-fields")}>
+          <button className="event-button" onClick={() => openInNewTab("/sportsApp-fields")}>
             Male Field Events
           </button>
-          <button className="event-button" onClick={() => handleNavigation("/female-sportsapp-fields")}>
+          <button className="event-button" onClick={() => openInNewTab("/female-sportsapp-fields")}>
             Female Field Events
           </button>
-          <button className="event-button" onClick={() => handleNavigation("/relayapp")}>
+          <button className="event-button" onClick={() => openInNewTab("/relayapp")}>
             Male Relay
           </button>
-          <button className="event-button" onClick={() => handleNavigation("/female-relayapp")}>
+          <button className="event-button" onClick={() => openInNewTab("/female-relayapp")}>
             Female Relay
           </button>
         </div>
       </section>
 
-      {/* Steps to Register */}
       <section id="register" className="register-steps">
         <h2>How to Register</h2>
         <ul>
@@ -127,7 +122,6 @@ function Home() {
         </ul>
       </section>
 
-      {/* Contact Section */}
       <section id="contact" className="contact-section">
         <h2>Contact Us</h2>
         <p>If you have any queries, feel free to reach out to us:</p>
@@ -137,7 +131,6 @@ function Home() {
         </ul>
       </section>
 
-      {/* Developer Team Section */}
       <section id="dev-team" className="dev-team text-center">
         <h2>Meet the Developers</h2>
         <div className="dev-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
@@ -160,7 +153,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="footer">
         <p>
           Made by Genconians, with ❤️ &copy; {new Date().getFullYear()} All rights reserved.
