@@ -141,7 +141,7 @@ function Home() {
               <h3 className="text-xl font-semibold">{dev.name}</h3>
               <p className="text-gray-600">{dev.role}</p>
               <p className="text-gray-500 text-sm">{dev.branch}</p>
-              <div className="flex justify-center gap-4 space-x-6 mt-3">
+              <div className="flex justify-center gap-8 space-x-6 mt-3">
                 <a href={dev.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-600 text-2xl">
                   <FaLinkedin />
                 </a>
