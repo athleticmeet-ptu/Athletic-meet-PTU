@@ -112,7 +112,7 @@ function Home() {
             <div className="dev-card">
               <img src="/abhijot.png" alt="Developer 2" />
               <h3>Abhijot Singh</h3>
-              <p className="role">Frontend Developer</p>
+              <p className="role">Full Stack Developer</p>
               <p className="branch">Computer Science &amp; Engineering</p>
               <div className="flex justify-center gap-4 mt-3">
                 <a href="https://www.linkedin.com/in/abhijot-singh-680888287/" target="_blank" rel="noopener noreferrer" className="text-blue-600 text-2xl">
