@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SportsApp.css";
 import axios from "axios";
+
 function Relay() {
   const [collegeName, setCollegeName] = useState("Loading...");
   const [relayData, setRelayData] = useState({});
@@ -9,6 +10,7 @@ function Relay() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
   const [urnErrors, setUrnErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const [formKey, setFormKey] = useState(0);
 
@@ -23,47 +25,31 @@ function Relay() {
 
   const currentRelayEvent = relayEvents[currentEventIndex];
 
- useEffect(() => {
-  const savedCollegeName = localStorage.getItem("collegeName");
-  
-  if (savedCollegeName) {
-    console.log("Using College Name from Local Storage");
-    setCollegeName(savedCollegeName);
-  } else {
-    console.log("Fetching College Name from API");
+  // Fetch college name on mount
+  useEffect(() => {
     fetch(`${apiUrl}/user-info`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         if (data.collegeName) {
           setCollegeName(data.collegeName);
-          localStorage.setItem("collegeName", data.collegeName);
         } else {
           navigate("/");
         }
       })
-      .catch((err) => {
-        console.error("Fetch Error:", err);
-        navigate("/");
-      });
-  }
-}, [navigate]);
+      .catch(() => navigate("/"));
+  }, [navigate]);
 
   // Move to next unlocked event
   const goToNextUnlockedEvent = async () => {
-    const collegeName = localStorage.getItem("collegeName");
-    const username = localStorage.getItem("username"); // ✅ Get username
     let nextIndex = currentEventIndex + 1;
 
     while (nextIndex < relayEvents.length) {
       const event = relayEvents[nextIndex];
       try {
-        const res = await axios.get(`${apiUrl}/relay/relay-status/${event}`, {
-        withCredentials: true,
-        headers: {
-          collegeName,
-          username, // ✅ Send username in headers
-        },
-      });
+        const res = await axios.get(
+          `${apiUrl}/relay/relay-status/${event}`,
+          { withCredentials: true }
+        );
 
         if (res.data.status !== "locked") {
           setCurrentEventIndex(nextIndex);
@@ -88,36 +74,28 @@ function Relay() {
       return;
     }
 
-   useEffect(() => {
-  const checkCurrentEventLock = async () => {
-    const collegeName = localStorage.getItem("collegeName");
-    const username = localStorage.getItem("username");
+    const checkCurrentEventLock = async () => {
+      try {
+        const res = await axios.get(
+          `${apiUrl}/relay/relay-status/${currentRelayEvent}`,
+          { withCredentials: true }
+        );
 
-    try {
-      const res = await axios.get(`${apiUrl}/relay/relay-status/${currentRelayEvent}`, {
-        withCredentials: true,
-        headers: {
-          collegeName,
-          username,
-        },
-      });
-
-      if (res.data.status === "locked") {
-        setIsLocked(true);
-        setTimeout(() => {
-          goToNextUnlockedEvent();
-        }, 2000);
-      } else {
-        setIsLocked(false);
+        if (res.data.status === "locked") {
+          setIsLocked(true);
+          setTimeout(() => {
+            goToNextUnlockedEvent();
+          }, 2000);
+        } else {
+          setIsLocked(false);
+        }
+      } catch (err) {
+        console.error("Error checking lock status:", err);
       }
-    } catch (err) {
-      console.error("Error checking lock status:", err);
-    }
-  };
+    };
 
-  checkCurrentEventLock();
-}, [currentRelayEvent]);
-
+    checkCurrentEventLock();
+  }, [currentRelayEvent]);
 
   const handleLogout = async () => {
     await fetch(`${apiUrl}/logout`, { credentials: "include" });
@@ -179,7 +157,7 @@ function Relay() {
         console.error("Error checking URN:", err);
       }
     }
-  }
+  };
 
   const validateFields = (student) => {
     if (
@@ -224,7 +202,7 @@ function Relay() {
       }, 2000);
       return;
     }
-
+    setIsSubmitting(true); // ⬅️ Start Loading
     const hasUrnErrors = Object.values(urnErrors).some(
       (error) => error && error.length > 0
     );
@@ -239,7 +217,7 @@ function Relay() {
     // Validate all 4 students
     for (let i = 1; i <= 4; i++) {
       const student = eventData[`student${i}`] || {};
-      if (!validateFields(student)) return;
+      if (!validateFields(student)){      setIsSubmitting(false); return;} // ⬅️ Fix
     }
 
     const calculateAge = (dob) => {
@@ -276,16 +254,10 @@ function Relay() {
 
     try {
       const response = await fetch(`${apiUrl}/relay/register`, {
-  method: "POST",
-  body: formData,
-  credentials: "include",
-  headers: {
-    collegename: localStorage.getItem("collegeName") || "",
-    username: localStorage.getItem("username") || "",
-  },
-});
-
-      
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
 
       const result = await response.json();
       if (result.success) {
@@ -294,6 +266,7 @@ function Relay() {
         } else {
           alert(result.message || "Relay Registration Successful!");
           setFormKey((prevKey) => prevKey + 1);
+          window.scrollTo({ top: 0, behavior: "smooth" }); // ⬅️ Scroll to top
         }
 
         goToNextUnlockedEvent();
@@ -308,6 +281,7 @@ function Relay() {
       console.error("Error:", error);
       alert("Server error. Please try again later.");
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -449,6 +423,7 @@ function Relay() {
                       />
                     </div>
                   ))}
+                                    {isSubmitting && <p style={{ color: "blue" }}>Submitting... Please wait.</p>}
                                   <button
                   className="submit-btn"
                   onClick={handleSubmit}
@@ -456,10 +431,10 @@ function Relay() {
                     isLocked ||
                     Object.values(urnErrors).some(
                       (error) => error && error.length > 0
-                    )
+                    ) || isSubmitting
                   }
                 >
-                  Submit & Next
+                   {isSubmitting ? "Submitting..." : "Submit & Next"}
                 </button>
                                   <button className="skip-btn" onClick={goToNextUnlockedEvent}>
                   Skip & Next
