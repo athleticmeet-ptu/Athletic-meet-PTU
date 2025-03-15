@@ -44,50 +44,67 @@ const handleNavigation = (path) => {
   const events = femaleEvents;
   const currentEvent = events[currentEventIndex];
 
-  useEffect(() => {
+useEffect(() => {
+  const savedCollegeName = localStorage.getItem("collegeName");
+  
+  if (savedCollegeName) {
+    console.log("Using College Name from Local Storage");
+    setCollegeName(savedCollegeName);
+  } else {
+    console.log("Fetching College Name from API");
     fetch(`${apiUrl}/user-info`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         if (data.collegeName) {
           setCollegeName(data.collegeName);
+          localStorage.setItem("collegeName", data.collegeName);
         } else {
           navigate("/");
         }
       })
-      .catch(() => navigate("/"));
-  }, [navigate]);
+      .catch((err) => {
+        console.error("Fetch Error:", err);
+        navigate("/");
+      });
+  }
+}, [navigate]);
 
   const handleLogout = async () => {
     await fetch(`${apiUrl}/logout`, { credentials: "include" });
     navigate("/");
   };
 
-  const goToNextUnlockedEvent = async () => {
-    let nextIndex = currentEventIndex + 1;
+ const goToNextUnlockedEvent = async () => {
+  let nextIndex = currentEventIndex + 1;
+  const collegeName = localStorage.getItem("collegeName");
+  const username = localStorage.getItem("username"); // ✅ Get username
 
-    while (nextIndex < events.length) {
-      const event = events[nextIndex];
-      try {
-        const res = await axios.get(
-          `${apiUrl}/student/event-status/${event}`,
-          { withCredentials: true }
-        );
+  while (nextIndex < events.length) {
+    const event = events[nextIndex];
+    try {
+      const res = await axios.get(`${apiUrl}/student/event-status/${event}`, {
+        withCredentials: true,
+        headers: {
+          collegeName,
+          username, // ✅ Send username in headers
+        },
+      });
 
-        if (res.data.status !== "locked") {
-          setCurrentEventIndex(nextIndex);
-          setIsLocked(false);
-          return;
-        } else {
-          nextIndex++;
-        }
-      } catch (err) {
-        console.error("Error checking lock status:", err);
+      if (res.data.status !== "locked") {
+        setCurrentEventIndex(nextIndex);
+        setIsLocked(false);
+        return;
+      } else {
         nextIndex++;
       }
+    } catch (err) {
+      console.error("Error checking lock status:", err);
+      nextIndex++;
     }
+  }
 
-    setIsSubmitted(true);
-  };
+  setIsSubmitted(true); // ✅ Stop condition if all events are locked
+};
 
   useEffect(() => {
     if (!currentEvent) {
@@ -95,12 +112,17 @@ const handleNavigation = (path) => {
       return;
     }
 
-    const checkCurrentEventLock = async () => {
-      try {
-        const res = await axios.get(
-          `${apiUrl}/student/event-status/${currentEvent}`,
-          { withCredentials: true }
-        );
+  const checkCurrentEventLock = async () => {
+    const collegeName = localStorage.getItem("collegeName");
+    const username = localStorage.getItem("username"); // ✅ Get username
+    try {
+      const res = await axios.get(`${apiUrl}/student/event-status/${currentEvent}`, {
+        withCredentials: true,
+        headers: {
+          collegeName,
+          username, // ✅ Send username in headers
+        },
+      });
 
         if (res.data.status === "locked") {
           setIsLocked(true);
@@ -299,6 +321,10 @@ const handleNavigation = (path) => {
         method: "POST",
         body: formData,
         credentials: "include",
+         headers: {
+    collegename: localStorage.getItem("collegeName") || "",
+    username: localStorage.getItem("username") || "",
+  },
       });
 
       const result = await response.json();
