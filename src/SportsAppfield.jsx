@@ -441,7 +441,7 @@ useEffect(() => {
                     }
                   />
                   <input
-                    type="text"
+                    type="number"
                     placeholder="URN"
                     onChange={(e) =>
                       handleInputChange(currentEvent, "student1", "urn", e.target.value)
@@ -494,7 +494,7 @@ useEffect(() => {
                     }
                   />
                   <input
-                    type="text"
+                    type="number"
                     placeholder="URN"
                     onChange={(e) =>
                       handleInputChange(currentEvent, "student2", "urn", e.target.value)
