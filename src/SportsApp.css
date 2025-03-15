@@ -1,7 +1,6 @@
 /* General styles */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-/* General styles */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
@@ -85,8 +84,6 @@ body {
   color: white;
   position: relative;
 }
-
-
 
 .welcome-text {
   font-size: 3.2rem;
@@ -242,22 +239,66 @@ p {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .navbar {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    padding: 15px;
   }
 
   .nav-buttons {
     width: 100%;
-    justify-content: space-between;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .background {
+    height: 45vh;
   }
 
   .events-container {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     padding: 20px;
-    margin: 20px;
-    grid-template-columns: 1fr;
   }
+
+  .event-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    min-height: 300px;
+    position: relative;
+  }
+
+  .college-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: auto; /* Isse naam ke size ke hisaab se adjust hoga */
+  }
+
+  .nav-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: auto; /* Isse college-name ke height ke hisaab se adjust hoga */
+  }
+
+  .nav-buttons button {
+    width: 90%;
+    text-align: center;
+  }
+
+  
+  
 
   .background {
     height: 40vh;
@@ -266,5 +307,33 @@ p {
   .welcome-text {
     font-size: 2.5rem;
   }
+
+  .events-container {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
 }
 
+@media (max-width: 480px) {
+.navbar{
+  height: 15rem;
+}
+  .college-name {
+    font-size: 1.5rem;
+  }
+
+  .welcome-text {
+    font-size: 2rem;
+  }
+
+  .athlete-form input,
+  .event-card select {
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  .submit-btn {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
