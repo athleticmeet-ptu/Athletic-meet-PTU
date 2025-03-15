@@ -239,101 +239,87 @@ p {
 }
 
 /* Responsive */
-@media (max-width: 1024px) {
+@media (min-width: 1400px) {
   .navbar {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    padding: 20px 40px;
+    height: 80px;
+  }
+
+  .college-name {
+    font-size: 2rem;
+    margin-bottom: 0;
+    text-align: left;
   }
 
   .nav-buttons {
-    width: 100%;
-    justify-content: center;
-    margin-top: 10px;
+    flex-direction: row;
+    gap: 20px;
+    width: auto;
   }
 
-  .background {
-    height: 45vh;
-  }
-
-  .events-container {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    padding: 20px;
-  }
-
-  .event-title {
-    font-size: 2rem;
+  .nav-buttons button {
+    width: auto;
   }
 }
 
-@media (max-width: 768px) {
+/* 900px to 1399px */
+@media (min-width: 900px) and (max-width: 1100px) {
   .navbar {
-    display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    height: auto; /* Let content decide the height */
+  }
+
+  .college-name {
+    font-size: 2rem;
     text-align: center;
-    padding: 20px;
-    min-height: 300px;
-    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .nav-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+  }
+
+  .nav-buttons button {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Below 900px */
+@media (max-width: 899px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 15px;
+    height: auto;
   }
 
   .college-name {
     font-size: 1.8rem;
-    font-weight: 700;
-    margin-bottom: auto; /* Isse naam ke size ke hisaab se adjust hoga */
+    text-align: center;
+    margin-bottom: 15px;
   }
 
   .nav-buttons {
-    display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
     width: 100%;
-    margin-top: auto; /* Isse college-name ke height ke hisaab se adjust hoga */
   }
 
   .nav-buttons button {
     width: 90%;
-    text-align: center;
-  }
-
-  
-  
-
-  .background {
-    height: 40vh;
-  }
-
-  .welcome-text {
-    font-size: 2.5rem;
-  }
-
-  .events-container {
-    grid-template-columns: 1fr;
-    padding: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-.navbar{
-  height: 15rem;
-}
-  .college-name {
-    font-size: 1.5rem;
-  }
-
-  .welcome-text {
-    font-size: 2rem;
-  }
-
-  .athlete-form input,
-  .event-card select {
     font-size: 1rem;
-    padding: 10px;
-  }
-
-  .submit-btn {
-    font-size: 1rem;
-    padding: 12px;
   }
 }
