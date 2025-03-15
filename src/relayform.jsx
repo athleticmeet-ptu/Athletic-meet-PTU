@@ -231,6 +231,7 @@ useEffect(() => {
 
     if (hasUrnErrors) {
       alert("One or more URNs are invalid or duplicated. Please fix them before submitting.");
+       setIsSubmitting(false);
       return;
     }
 
@@ -305,9 +306,9 @@ useEffect(() => {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Server error. Please try again later.");
-    }
-    setIsSubmitting(false);
+      console.log("Server error. Please try again later.");
+    }finally{
+    setIsSubmitting(false);}
   };
 
   return (
@@ -343,7 +344,7 @@ useEffect(() => {
 
             {isLocked ? (
               <p style={{ color: "red" }}>
-                You have already registered for this event. Form is locked.
+                You have already registered for this event. Form is locked.Please wait for the next event.
               </p>
             ) : (
               <>
