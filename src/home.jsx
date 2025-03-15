@@ -111,7 +111,7 @@ function Home() {
         <h2>How to Register</h2>
         <ul>
           <li><strong>Only the concerned sports teacher of the college can complete the registration process.</strong></li>
-          <li>Students can register for two types of events: <strong></strong>Track & Field and Relay.</strong></li>
+          <li>Students can register for two types of events: <strong>Track & Field and Relay.</strong></li>
           <li>Each Track & Field event allows a maximum of <strong>two students per event.</strong></li>
           <li>Relay events require exactly <strong>four students to register.</strong></li>
           <li><strong>Once the form is submitted, it will be locked and cannot be edited.</strong></li>
