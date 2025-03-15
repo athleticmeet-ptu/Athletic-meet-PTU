@@ -344,7 +344,7 @@ try{
           window.scrollTo({ top: 0, behavior: "smooth" }); // ⬅️ Scroll to top
       }, 100);
     } else {
-      setIsSubmitted(true);
+       goToNextUnlockedEvent();
     }
   };
 
