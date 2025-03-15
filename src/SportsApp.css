@@ -12,8 +12,8 @@ body {
     content: "Date of Birth";
     color: gray;
     position: absolute;
-    margin-left: 100px;
-    margin-top: 10px;
+    margin-left: 150px;
+    margin-top: 7px;
   }
 /* Navbar */
 .navbar {
