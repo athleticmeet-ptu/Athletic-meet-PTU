@@ -398,7 +398,7 @@ useEffect(() => {
           <button
             className="female-register-btn"
             onClick={() =>
-              (window.location.href = "https://ptu.gndecathletix.games/female-sportsapp")
+              (window.location.href = "https://ptu.gndecathletix.games/female-sportsapp-fields")
             }
           >
             Female Sports Register
