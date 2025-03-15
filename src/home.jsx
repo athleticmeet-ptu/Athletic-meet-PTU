@@ -120,6 +120,7 @@ function Home() {
           <li>Uploading a valid ID card or a recent PTU mark sheet is <strong>mandatory.</strong></li>
           <li>The age of the athlete must be <strong>less than 25 years.</strong></li>
           <li>All athlete details must be correct and verifiable.</li>
+          <li>For a better experience, <strong>registration should be done on a desktop or laptop.</strong></li>
         </ul>
       </section>
 
