@@ -76,6 +76,7 @@ useEffect(() => {
 
     while (nextIndex < events.length) {
       const event = events[nextIndex];
+       setIsSubmitted(false);
       try {
         const res = await axios.get(
           `${apiUrl}/student/event-status/${event}`,
