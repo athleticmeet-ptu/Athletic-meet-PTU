@@ -34,6 +34,7 @@ const handleNavigation = (path) => {
     "Shot Put-Female",
     "Discus Throw-Female",
     "Javelin Throw-Female",
+    "Javelin Throw-Female",
   ];
 
   const events = femaleEvents;
@@ -64,19 +65,13 @@ useEffect(() => {
   }
 }, [navigate]);
 
-  const handleLogout = async () => {
-    await fetch(`${apiUrl}/logout`, { credentials: "include" });
-    navigate("/");
-  };
-
   const goToNextUnlockedEvent = async () => {
     let nextIndex = currentEventIndex + 1;
-    const collegeName = localStorage.getItem("collegeName");
-  const username = localStorage.getItem("username"); //
+      const collegeName = localStorage.getItem("collegeName");
+  const username = localStorage.getItem("username"); // ✅ Get username
 
     while (nextIndex < events.length) {
       const event = events[nextIndex];
-       setIsSubmitted(false);
       try {
         const res = await axios.get(
           `${apiUrl}/student/event-status/${event}`,
@@ -106,12 +101,12 @@ useEffect(() => {
     }
 
     const checkCurrentEventLock = async () => {
-      const collegeName = localStorage.getItem("collegeName");
-    const username = localStorage.getItem("username"); // ✅
+          const collegeName = localStorage.getItem("collegeName");
+    const username = localStorage.getItem("username"); 
       try {
         const res = await axios.get(
           `${apiUrl}/student/event-status/${currentEvent}`,
-          { withCredentials: true,headers: {
+          { withCredentials: true,        headers: {
           collegeName,
           username, // ✅ Send username in headers
         }, }
@@ -144,6 +139,7 @@ useEffect(() => {
       !student1.idCard
     ) {
       alert("All fields are required. Please fill in missing details.");
+      isSubmitting(false);
       return false;
     }
 
@@ -257,7 +253,7 @@ useEffect(() => {
     const currentEvent = events[currentEventIndex];
     const student1 = athleteData[currentEvent]?.student1 || {};
     const student2 = athleteData[currentEvent]?.student2 || {};
-try{
+
     if (urnWarnings.student1 || urnWarnings.student2 || urnWarnings.sameUrn) {
       alert("Please fix URN registration issues before submitting.");
       setIsSubmitting(false);
@@ -310,12 +306,12 @@ try{
       }
     }
 
-
+    try {
       const response = await fetch(`${apiUrl}/student/register`, {
         method: "POST",
         body: formData,
         credentials: "include",
-         headers: {
+          headers: {
     collegename: localStorage.getItem("collegeName") || "",
     username: localStorage.getItem("username") || "",
   },
@@ -332,9 +328,9 @@ try{
       }
     } catch (error) {
       console.error("Error:", error);
-      console.log("Server error. Please try again later.");
-    }finally{
-    setIsSubmitting(false);}
+      alert("Server error. Please try again later.");
+    }
+    setIsSubmitting(false);
   };
 
   const handleNext = () => {
@@ -345,7 +341,7 @@ try{
           window.scrollTo({ top: 0, behavior: "smooth" }); // ⬅️ Scroll to top
       }, 100);
     } else {
-       goToNextUnlockedEvent();
+      setIsSubmitted(true);
     }
   };
 
