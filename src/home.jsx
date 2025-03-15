@@ -110,12 +110,12 @@ function Home() {
       <section id="register" className="register-steps">
         <h2>How to Register</h2>
         <ul>
-          <li>Only the concerned sports teacher of the college can complete the registration process.</li>
-          <li>Students can register for two types of events: Track & Field and Relay.</li>
+          <li><strong>Only the concerned sports teacher of the college can complete the registration process.</strong></li>
+          <li>Students can register for two types of events: <strong></strong>Track & Field and Relay.</strong></li>
           <li>Each Track & Field event allows a maximum of <strong>two students per event.</strong></li>
           <li>Relay events require exactly <strong>four students to register.</strong></li>
-          <li>Once the form is submitted, it will be locked and cannot be edited.</li>
-          <li>If the registration is skipped, the form remains open.</li>
+          <li><strong>Once the form is submitted, it will be locked and cannot be edited.</strong></li>
+          <li>If the Form is skipped, the form remains open.</li>
           <li>A student can participate in a maximum of <strong>two events</strong> and <strong>one relay.</strong></li>
           <li>Uploading a valid ID card or a recent PTU mark sheet is <strong>mandatory.</strong></li>
           <li>The age of the athlete must be <strong>less than 25 years.</strong></li>
