@@ -22,7 +22,7 @@ function Home() {
   return (
     <div className="home-container">
       <header className="header">
-        <nav className="navbar">
+        <nav className="navbar-nav">
           <h1 className="logo">26th IKGPTU Athletic Meet</h1>
           <ul className="nav-list">
             <button className="contact" onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>
