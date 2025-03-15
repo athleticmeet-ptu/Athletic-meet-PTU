@@ -20,25 +20,30 @@ function Relayfemale() {
   const relayEvents = femaleRelayEvents;
   const currentRelayEvent = relayEvents[currentEventIndex];
   const apiUrl = import.meta.env.VITE_API_URL;
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const res = await axios.get(`${apiUrl}/user-info`, {
-          withCredentials: true,
-        });
-        if (res.data.collegeName) {
-          setCollegeName(res.data.collegeName);
+ useEffect(() => {
+  const savedCollegeName = localStorage.getItem("collegeName");
+  
+  if (savedCollegeName) {
+    console.log("Using College Name from Local Storage");
+    setCollegeName(savedCollegeName);
+  } else {
+    console.log("Fetching College Name from API");
+    fetch(`${apiUrl}/user-info`, { credentials: "include" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.collegeName) {
+          setCollegeName(data.collegeName);
+          localStorage.setItem("collegeName", data.collegeName);
         } else {
           navigate("/");
         }
-      } catch (err) {
-        console.log(err);
+      })
+      .catch((err) => {
+        console.error("Fetch Error:", err);
         navigate("/");
-      }
-    };
-
-    fetchUserInfo();
-  }, [navigate]);
+      });
+  }
+}, [navigate]);
 
   const handleLogout = async () => {
     try {
@@ -55,13 +60,18 @@ function Relayfemale() {
   };
   const goToNextUnlockedEvent = async () => {
     let nextIndex = currentEventIndex + 1;
+     const collegeName = localStorage.getItem("collegeName");
+  const username = localStorage.getItem("username"); // ✅ Get username
 
     while (nextIndex < relayEvents.length) {
       const event = relayEvents[nextIndex];
       try {
         const res = await axios.get(
           `${apiUrl}/relay/relay-status/${event}`,
-          { withCredentials: true }
+          { withCredentials: true, headers: {
+          collegeName,
+          username, // ✅ Send username in headers
+        }, }
         );
 
         if (res.data.status !== "locked") {
@@ -87,10 +97,15 @@ function Relayfemale() {
     }
 
     const checkCurrentEventLock = async () => {
+      const collegeName = localStorage.getItem("collegeName");
+    const username = localStorage.getItem("username"); // ✅ Get username
       try {
         const res = await axios.get(
           `${apiUrl}/relay/relay-status/${currentRelayEvent}`,
-          { withCredentials: true }
+          { withCredentials: true, headers: {
+          collegeName,
+          username, // ✅ Send username in headers
+        }, }
         );
 
         if (res.data.status === "locked") {
@@ -257,6 +272,10 @@ function Relayfemale() {
         formData,
         {
           withCredentials: true,
+           headers: {
+    collegename: localStorage.getItem("collegeName") || "",
+    username: localStorage.getItem("username") || "",
+  },
         }
       );
 
