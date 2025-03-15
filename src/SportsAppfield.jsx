@@ -46,30 +46,47 @@ const apiUrl = import.meta.env.VITE_API_URL;
   const currentEvent = events[currentEventIndex];
 
   // Fetch college info on mount
-  useEffect(() => {
+useEffect(() => {
+  const savedCollegeName = localStorage.getItem("collegeName");
+  
+  if (savedCollegeName) {
+    console.log("Using College Name from Local Storage");
+    setCollegeName(savedCollegeName);
+  } else {
+    console.log("Fetching College Name from API");
     fetch(`${apiUrl}/user-info`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         if (data.collegeName) {
           setCollegeName(data.collegeName);
+          localStorage.setItem("collegeName", data.collegeName);
         } else {
           navigate("/");
         }
       })
-      .catch(() => navigate("/"));
-  }, [navigate]);
+      .catch((err) => {
+        console.error("Fetch Error:", err);
+        navigate("/");
+      });
+  }
+}, [navigate]);
 
   // Move to the next unlocked event
   const goToNextUnlockedEvent = async () => {
 
     let nextIndex = currentEventIndex + 1;
+    const collegeName = localStorage.getItem("collegeName");
+  const username = localStorage.getItem("username"); // ✅
 
     while (nextIndex < events.length) {
       const event = events[nextIndex];
       try {
         const res = await axios.get(
           `${apiUrl}/student/event-status/${event}`,
-          { withCredentials: true }
+          { withCredentials: true,headers: {
+          collegeName,
+          username, // ✅ Send username in headers
+        }, }
         );
 
         if (res.data.status !== "locked") {
@@ -94,10 +111,16 @@ const apiUrl = import.meta.env.VITE_API_URL;
     }
 
     const checkCurrentEventLock = async () => {
+      const collegeName = localStorage.getItem("collegeName");
+  const username = localStorage.getItem("username"); // ✅
       try {
         const res = await axios.get(
           `${apiUrl}/student/event-status/${currentEvent}`,
-          { withCredentials: true }
+          { withCredentials: true,        headers: {
+          collegeName,
+          username, // ✅ Send username in headers
+        }, }
+          
         );
 
         if (res.data.status === "locked") {
@@ -327,6 +350,10 @@ const apiUrl = import.meta.env.VITE_API_URL;
         method: "POST",
         body: formData,
         credentials: "include",
+          headers: {
+    collegename: localStorage.getItem("collegeName") || "",
+    username: localStorage.getItem("username") || "",
+  },
       });
 
       const result = await response.json();
