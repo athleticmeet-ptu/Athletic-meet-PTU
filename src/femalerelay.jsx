@@ -223,6 +223,7 @@ function Relayfemale() {
 
     if (hasUrnErrors) {
       alert("One or more URNs are incorrect or duplicated. Please fix them before submitting.");
+       setIsSubmitting(false);
       return;
     }
 
@@ -291,9 +292,9 @@ function Relayfemale() {
       }
     } catch (error) {
       console.error("Error submitting relay data:", error);
-      alert("Server error. Please try again later.");
-    }
-    setIsSubmitting(false);
+      console.log("Server error. Please try again later.");
+    }finally{
+    setIsSubmitting(false);}
   };
 
   const handleNext = () => {
@@ -338,7 +339,7 @@ function Relayfemale() {
 
             {isLocked ? (
               <p style={{ color: "red" }}>
-                You have already registered for this event. Form is locked.
+                You have already registered for this event. Form is locked.Please wait for next event.
               </p>
             ) : (
               <>
