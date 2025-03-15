@@ -9,6 +9,7 @@ function SportsAppfemale() {
   const [isLocked, setIsLocked] = useState(false);
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const [formKey, setFormKey] = useState(0);
   const resetForm = () => {
@@ -232,6 +233,7 @@ const handleNavigation = (path) => {
       }, 2000);
       return;
     }
+    setIsSubmitting(true); // ⬅️ Start Loading
 
     const currentEvent = events[currentEventIndex];
     const student1 = athleteData[currentEvent]?.student1 || {};
@@ -239,6 +241,7 @@ const handleNavigation = (path) => {
 
     if (urnWarnings.student1 || urnWarnings.student2 || urnWarnings.sameUrn) {
       alert("Please fix URN registration issues before submitting.");
+      setIsSubmitting(false);
       return;
     }
 
@@ -308,6 +311,7 @@ const handleNavigation = (path) => {
       console.error("Error:", error);
       alert("Server error. Please try again later.");
     }
+    setIsSubmitting(false);
   };
 
   const handleNext = () => {
@@ -315,11 +319,13 @@ const handleNavigation = (path) => {
       resetForm();
       setTimeout(() => {
           setCurrentEventIndex((prevIndex) => prevIndex + 1);
+          window.scrollTo({ top: 0, behavior: "smooth" }); // ⬅️ Scroll to top
       }, 100);
     } else {
       setIsSubmitted(true);
     }
   };
+
 
   return (
     <div className="sports-app">
@@ -540,13 +546,11 @@ const handleNavigation = (path) => {
                   {urnWarnings.sameUrn && (
                     <p style={{ color: "red" }}>{urnWarnings.sameUrn}</p>
                   )}
-                                  <button
-                  className="submit-btn"
-                  onClick={handleSubmit}
-                  disabled={isLocked}
-                >
-                  Submit & Next
-                </button>
+                  {isSubmitting && <p style={{ color: "blue" }}>Submitting... Please wait.</p>}
+
+<button className="submit-btn" onClick={handleSubmit} disabled={isLocked || isSubmitting}>
+  {isSubmitting ? "Submitting..." : "Submit & Next"}
+</button>
                                   <button className="skip-btn" onClick={handleNext}>
                   Skip & Next
                 </button>
