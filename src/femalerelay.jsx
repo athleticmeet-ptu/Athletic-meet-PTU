@@ -9,6 +9,7 @@ function Relayfemale() {
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [urnErrors, setUrnErrors] = useState({});
 
   const navigate = useNavigate();
@@ -200,7 +201,7 @@ function Relayfemale() {
       }, 2000);
       return;
     }
-
+    setIsSubmitting(true); // ⬅️ Start Loading
     const hasUrnErrors = Object.values(urnErrors).some(
       (error) => error && error.length > 0
     );
@@ -215,7 +216,7 @@ function Relayfemale() {
 
     for (let i = 1; i <= 4; i++) {
       const student = eventData[`student${i}`] || {};
-      if (!validateFields(student)) return;
+      if (!validateFields(student)){      setIsSubmitting(false); return;}
     }
 
     const calculateAge = (dob) => {
@@ -264,6 +265,7 @@ function Relayfemale() {
       if (result.success) {
         alert(result.message || "Relay Registration Successful!");
         setFormKey((prevKey) => prevKey + 1);
+        window.scrollTo({ top: 0, behavior: "smooth" }); // ⬅️ Scroll to top
         goToNextUnlockedEvent();
       } else {
         alert(result.message || "Relay Registration failed. Please try again.");
@@ -272,11 +274,13 @@ function Relayfemale() {
       console.error("Error submitting relay data:", error);
       alert("Server error. Please try again later.");
     }
+    setIsSubmitting(false);
   };
 
   const handleNext = () => {
     if (currentEventIndex < relayEvents.length - 1) {
       setCurrentEventIndex((prevIndex) => prevIndex + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" }); // ⬅️ Scroll to top
     } else {
       setIsSubmitted(true);
     }
@@ -416,6 +420,7 @@ function Relayfemale() {
                       </div>
                     );
                   })}
+                                    {isSubmitting && <p style={{ color: "blue" }}>Submitting... Please wait.</p>}
                                   <button
                   className="submit-btn"
                   onClick={handleSubmit}
@@ -423,10 +428,10 @@ function Relayfemale() {
                     isLocked ||
                     Object.values(urnErrors).some(
                       (error) => error && error.length > 0
-                    )
+                    ) || isSubmitting
                   }
                 >
-                  Submit & Next
+                   {isSubmitting ? "Submitting..." : "Submit & Next"}
                 </button>
                                   <button className="skip-btn" onClick={handleNext}>
                   Skip & Next
