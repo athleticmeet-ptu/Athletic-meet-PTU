@@ -198,6 +198,7 @@ nav button {
   text-align: left;
   display: inline-block;
   padding: 0;
+  padding-left:40px;
 }
 
 .register-steps li {
