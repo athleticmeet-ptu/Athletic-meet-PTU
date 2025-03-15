@@ -290,7 +290,7 @@ useEffect(() => {
     const student1 = athleteData[currentEvent]?.student1 || {};
     const student2 = athleteData[currentEvent]?.student2 || {};
 
-    // Final URN check before submission
+    try{// Final URN check before submission
     if (student1.urn && student2.urn && student1.urn === student2.urn) {
       alert("Student 1 and Student 2 cannot have the same URN.");
       setIsSubmitted(false);
@@ -345,7 +345,6 @@ useEffect(() => {
       }
     }
 
-    try {
       const response = await fetch(`${apiUrl}/student/register`, {
         method: "POST",
         body: formData,
@@ -368,9 +367,9 @@ useEffect(() => {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Server error. Please try again later.");
-    }
-    setIsSubmitting(false);
+      console.log("Server error. Please try again later.");
+    }finally{
+    setIsSubmitting(false);}
   };
 
   const handleNext = () => {
@@ -421,7 +420,7 @@ useEffect(() => {
 
             {isLocked && (
               <p style={{ color: "red" }}>
-                You have already registered for this event. Form is locked.
+                You have already registered for this event. Form is locked.Please Wait for next form
               </p>
             )}
 
