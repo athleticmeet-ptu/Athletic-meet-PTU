@@ -68,7 +68,7 @@ function Home() {
 
       <section id="register" className="register-steps">
         <h2>How to Register</h2>
-        <ol>
+        <ul>
           <li><strong>Only the concerned sports teacher of the college can complete the registration process.</strong></li>
           <li>Students can register for two types of events: <strong>Track & Field and Relay.</strong></li>
           <li>Each Track & Field event allows a maximum of <strong>two students per event.</strong></li>
@@ -80,7 +80,7 @@ function Home() {
           <li>The age of the athlete must be <strong>less than 25 years.</strong></li>
           <li>All athlete details must be correct and verifiable.</li>
           <li>For a better experience, <strong>registration should be done on a desktop or laptop.</strong></li>
-        </ol>
+        </ul>
       </section>
 
       <section id="contact" className="contact-section">
