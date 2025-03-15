@@ -8,7 +8,13 @@ body {
   background-color: #f8f9fa;
   color: #333;
 }
-
+ input[type="date"]:before {
+    content: "Date of Birth";
+    color: gray;
+    position: absolute;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
 /* Navbar */
 .navbar {
   display: flex;
