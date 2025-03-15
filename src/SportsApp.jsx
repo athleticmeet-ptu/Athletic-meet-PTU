@@ -12,6 +12,7 @@ function SportsApp() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [urnWarnings, setUrnWarnings] = useState({});
   const [urnMatchWarning, setUrnMatchWarning] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const [formKey, setFormKey] = useState(0);
   const resetForm = () => {
@@ -290,7 +291,7 @@ useEffect(() => {
       }, 2000);
       return;
     }
-
+    setIsSubmitting(true); // ⬅️ Start Loading
     const currentEvent = events[currentEventIndex];
     const student1 = athleteData[currentEvent]?.student1 || {};
     const student2 = athleteData[currentEvent]?.student2 || {};
@@ -298,6 +299,7 @@ useEffect(() => {
     // Final URN check before submission
     if (student1.urn && student2.urn && student1.urn === student2.urn) {
       alert("Student 1 and Student 2 cannot have the same URN.");
+            setIsSubmitting(false);
       return;
     }
 
@@ -375,6 +377,7 @@ useEffect(() => {
       console.error("Error:", error);
       alert("Server error. Please try again later.");
     }
+        setIsSubmitting(false);
   };
 
   const handleNext = () => {
@@ -382,6 +385,7 @@ useEffect(() => {
       resetForm();
       setTimeout(() => {
         setCurrentEventIndex((prevIndex) => prevIndex + 1);
+        window.scrollTo({ top: 0, behavior: "smooth" }); // ⬅️ Scroll to top
     }, 1000); 
       
     } else {
@@ -540,13 +544,11 @@ useEffect(() => {
                       handleInputChange(currentEvent, "student2", "idCard", e.target.files[0])
                     }
                   />
-                <button
-                  className="submit-btn"
-                  onClick={handleSubmit}
-                  disabled={submitDisabled}
-                >
-                  Submit & Next
-                </button>
+                  {isSubmitting && <p style={{ color: "blue" }}>Submitting... Please wait.</p>}
+
+<button className="submit-btn" onClick={handleSubmit} disabled={submitDisabled || isSubmitting}>
+  {isSubmitting ? "Submitting..." : "Submit & Next"}
+</button>
                  <button className="skip-btn" onClick={handleNext}>
                   Skip & Next
                 </button>
