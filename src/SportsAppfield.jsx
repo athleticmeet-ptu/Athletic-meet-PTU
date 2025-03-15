@@ -11,6 +11,7 @@ function SportsAppfield() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [urnWarnings, setUrnWarnings] = useState({});
   const [urnMatchWarning, setUrnMatchWarning] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const [formKey, setFormKey] = useState(0);
   const resetForm = () => {
@@ -83,8 +84,6 @@ const apiUrl = import.meta.env.VITE_API_URL;
         nextIndex++;
       }
     }
-
-    setIsSubmitted(true);
   };
 
   // Check lock status for current event
@@ -186,6 +185,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
     if (urn1 && urn2 && urn1 === urn2) {
       setUrnMatchWarning("Student 1 and Student 2 cannot have the same URN.");
+      setIsSubmitting(false);
     } else {
       setUrnMatchWarning("");
     }
@@ -262,7 +262,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
       }, 2000);
       return;
     }
-
+    setIsSubmitting(true); // ⬅️ Start Loading
     const currentEvent = events[currentEventIndex];
     const student1 = athleteData[currentEvent]?.student1 || {};
     const student2 = athleteData[currentEvent]?.student2 || {};
@@ -270,6 +270,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
     // Final URN check before submission
     if (student1.urn && student2.urn && student1.urn === student2.urn) {
       alert("Student 1 and Student 2 cannot have the same URN.");
+      setIsSubmitted(false);
       return;
     }
 
@@ -342,6 +343,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
       console.error("Error:", error);
       alert("Server error. Please try again later.");
     }
+    setIsSubmitting(false);
   };
 
   const handleNext = () => {
@@ -349,7 +351,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
       resetForm();
       setTimeout(() => {
         setCurrentEventIndex((prevIndex) => prevIndex + 1);
-    }, 1000); 
+        window.scrollTo({ top: 0, behavior: "smooth" }); // ⬅️ Scroll to top
+    }, 500); 
       
     } else {
       setIsSubmitted(true);
@@ -507,13 +510,11 @@ const apiUrl = import.meta.env.VITE_API_URL;
                       handleInputChange(currentEvent, "student2", "idCard", e.target.files[0])
                     }
                   />
-                <button
-                  className="submit-btn"
-                  onClick={handleSubmit}
-                  disabled={submitDisabled}
-                >
-                  Submit & Next
-                </button>
+                  {isSubmitting && <p style={{ color: "blue" }}>Submitting... Please wait.</p>}
+
+<button className="submit-btn" onClick={handleSubmit} disabled={submitDisabled || isSubmitting}>
+  {isSubmitting ? "Submitting..." : "Submit & Next"}
+</button>
                  <button className="skip-btn" onClick={handleNext}>
                   Skip & Next
                 </button>
