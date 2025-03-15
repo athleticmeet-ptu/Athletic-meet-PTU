@@ -4,45 +4,39 @@ import "./Login.css";
 import leftLogo from "/logo1.png"; // Left Logo
 import rightLogo from "/logo2.png"; // Right Logo
 const apiUrl = import.meta.env.VITE_API_URL;
+
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-const handleLogin = async (e) => {
-  e.preventDefault();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    const response = await fetch(`${apiUrl}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include", // ✅ Ensures cookies are sent (important for sessions)
-      mode: "cors", // ✅ Allows cross-origin requests
-      body: JSON.stringify({ username, password }),
-    });
+    try {
+      const response = await fetch(`${apiUrl}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ username, password }),
+      });
 
-    const result = await response.json();
-    console.log("Login Response:", result);
+      const result = await response.json();
 
-    if (response.ok && result.success) {
-      localStorage.setItem("collegeName", result.user.collegeName || "");
-      localStorage.setItem("username", result.user.username || "");
-
-      navigate(result.redirect || "/home");
-    } else {
-      alert(result.error || "Login failed. Please try again.");
+      if (response.ok && result.success) {
+        navigate("/home");
+      } else {
+        alert(result.error || "Login failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+      alert("Login failed. Please try again.");
     }
-  } catch (error) {
-    console.error("❌ Login Error:", error);
-    alert("Login failed. Please try again.");
-  }
-};
-
-
-
-
+    
+    setLoading(false);
+  };
 
   return (
     <div className="login-container">
@@ -56,10 +50,7 @@ const handleLogin = async (e) => {
       {/* Login Card */}
       <div className="login-card">
         <h2 className="login-title">Welcome to Registration</h2>
-        <form onSubmit={(e) => { 
-  console.log("🔥 Form Submitted!"); // ✅ Check if form submission happens
-  handleLogin(e);
-}} className="login-form">
+        <form onSubmit={handleLogin} className="login-form">
           <input
             type="text"
             placeholder="Username"
@@ -67,6 +58,7 @@ const handleLogin = async (e) => {
             onChange={(e) => setUsername(e.target.value)}
             required
             className="input-field"
+            disabled={loading}
           />
           <input
             type="password"
@@ -75,8 +67,11 @@ const handleLogin = async (e) => {
             onChange={(e) => setPassword(e.target.value)}
             required
             className="input-field"
+            disabled={loading}
           />
-          <button type="submit" className="login-button">Login</button>
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? "Please wait..." : "Login"}
+          </button>
         </form>
       </div>
     </div>
