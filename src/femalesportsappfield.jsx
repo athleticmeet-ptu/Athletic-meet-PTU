@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SportsApp.css";
 import axios from "axios";
-function SportsAppfemale() {
+function SportsAppfemalefields() {
   const [collegeName, setCollegeName] = useState("Loading...");
   const [athleteData, setAthleteData] = useState({});
   const [urnWarnings, setUrnWarnings] = useState({});
@@ -588,4 +588,4 @@ useEffect(() => {
   );
 }
 
-export default SportsAppfemale;
+export default SportsAppfemalefields;
