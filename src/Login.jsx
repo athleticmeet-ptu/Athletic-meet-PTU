@@ -20,12 +20,16 @@ function Login() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
+         mode: "cors",
         body: JSON.stringify({ username, password }),
       });
 
-      const result = await response.json();
+            const result = await response.json();
+
 
       if (response.ok && result.success) {
+         localStorage.setItem("collegeName", result.user.collegeName || "");
+       localStorage.setItem("username", result.user.username || "");
         navigate("/home");
       } else {
         alert(result.error || "Login failed. Please try again.");
