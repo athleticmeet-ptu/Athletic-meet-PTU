@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./SportsApp.css";
 import axios from "axios";
 const apiUrl = import.meta.env.VITE_API_URL;
-function SportsAppfemalefields() {
+function SportsAppfemale() {
   const [collegeName, setCollegeName] = useState("Loading...");
   const [athleteData, setAthleteData] = useState({});
   const [urnWarnings, setUrnWarnings] = useState({});
@@ -596,4 +596,4 @@ try{
   );
 }
 
-export default SportsAppfemalefields;
+export default SportsAppfemale;
