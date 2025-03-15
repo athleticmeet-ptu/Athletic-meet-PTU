@@ -34,7 +34,6 @@ const handleNavigation = (path) => {
     "Shot Put-Female",
     "Discus Throw-Female",
     "Javelin Throw-Female",
-    "Javelin Throw-Female",
   ];
 
   const events = femaleEvents;
