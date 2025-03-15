@@ -45,13 +45,13 @@ nav button {
   bottom: -8px;
 }
 
-.navbar-nav {
+.navbarn {
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 100%;
   margin: 0px auto;
-  height: 5px;
+  flex-direction:row;
 }
 
 .logo {
@@ -97,7 +97,7 @@ nav button {
 
 /* Mobile Navbar */
 @media (max-width: 768px) {
-  .navbar {
+  .navbarn {
     flex-direction: column;
     align-items: center;
   }
@@ -236,7 +236,7 @@ nav button {
     box-shadow: none;
   }
 
-  .navbar {
+  .navbarn {
     flex-direction: column;
     height: auto;
   }
