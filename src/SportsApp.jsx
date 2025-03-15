@@ -295,7 +295,7 @@ useEffect(() => {
     const currentEvent = events[currentEventIndex];
     const student1 = athleteData[currentEvent]?.student1 || {};
     const student2 = athleteData[currentEvent]?.student2 || {};
-
+try{
     // Final URN check before submission
     if (student1.urn && student2.urn && student1.urn === student2.urn) {
       alert("Student 1 and Student 2 cannot have the same URN.");
@@ -351,7 +351,7 @@ useEffect(() => {
       }
     }
 
-    try {
+    
      const response = await fetch(`${apiUrl}/student/register`, {
   method: "POST",
   body: formData,
@@ -375,9 +375,9 @@ useEffect(() => {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Server error. Please try again later.");
-    }
-        setIsSubmitting(false);
+      console.log("Server error. Please try again later.");
+    }finally{
+        setIsSubmitting(false);}
   };
 
   const handleNext = () => {
@@ -473,6 +473,7 @@ useEffect(() => {
                   />
                   <input
                     type="date"
+                    placeholder="Date Of Birth"
                     onChange={(e) =>
                       handleInputChange(currentEvent, "student1", "dob", e.target.value)
                     }
@@ -526,6 +527,7 @@ useEffect(() => {
                   />
                   <input
                     type="date"
+                    placeholder="Date Of Birth"
                     onChange={(e) =>
                       handleInputChange(currentEvent, "student2", "dob", e.target.value)
                     }
