@@ -170,7 +170,7 @@ function Home() {
 
       <footer className="footer">
         <p>
-          Made by Genconians, with ❤️ &copy; {new Date().getFullYear()} All rights reserved.
+          Made by <a href="https://www.gndec.ac.in" target="_blank" rel="noopener noreferrer" >Genconians</a>, with ❤️ &copy; {new Date().getFullYear()} All rights reserved.
         </p>
       </footer>
     </div>
