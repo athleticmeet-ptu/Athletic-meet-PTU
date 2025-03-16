@@ -306,7 +306,8 @@ useEffect(() => {
     } catch (error) {
       console.error("Error:", error);
       alert("Server error. Please try again later.");
-    }
+    }finally{
+     setIsSubmitting(false);}
   };
 
   return (
