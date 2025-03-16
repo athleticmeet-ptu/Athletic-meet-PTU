@@ -20,11 +20,11 @@ body {
 
 /* Placeholder text */
 input[type="file"]:before {
-  content: "UPLOAD ID OR PTU MARKSHEET";
+  content: "Upload ID or PTU Marksheet";
     color: gray;
     position: absolute;
-    margin-left: 300px;
-    margin-top: 5px;
+    margin-left: 20px;
+    margin-top: 2px;
 }
 
 
