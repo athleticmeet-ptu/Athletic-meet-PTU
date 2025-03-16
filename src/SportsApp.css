@@ -17,27 +17,13 @@ body {
   }
 
 
-input[type="file"] {
-  position: relative;
-  width: 200px; /* Adjust width as needed */
-  height: 40px;
-  color: transparent; /* Hide default text */
- 
-}
-
-input[type="file"]::file-selector-button {
-  content: "Upload ID Card"; /* Placeholder text */
-  color: gray;
-  background: #f4f4f4;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-input[type="file"]:hover::file-selector-button {
-  background: #e4e4e4; /* Change background on hover */
-}
+ input[type="file"]:before {
+    content: "Date of Birth";
+    color: gray;
+    position: absolute;
+    margin-left: 150px;
+    margin-top: 5px;
+  }
 
 
 
