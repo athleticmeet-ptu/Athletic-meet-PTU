@@ -17,13 +17,18 @@ body {
   }
 
 
- input[type="file"]:before {
-    content: "UPLOAD ID OR PTU MARKSHEET";
+input[type="file"]:before {
+    content: "Upload ID or PTU Marksheet (File size- in kbs)";
     color: gray;
     position: absolute;
     margin-left: 300px;
-    margin-top: 5px;
-  }
+    margin-top: 2px;
+}
+
+/* Jab file select ho jaye, text hide ho jaye */
+input[type="file"]:valid:before {
+    content: "";
+}
 
 
 
