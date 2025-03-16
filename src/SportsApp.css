@@ -23,7 +23,7 @@ input[type="file"]:before {
   content: "Upload ID or PTU Marksheet";
     color: gray;
     position: absolute;
-    margin-left: 20px;
+    margin-left: 280px;
     margin-top: 2px;
 }
 
