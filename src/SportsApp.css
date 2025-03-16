@@ -17,15 +17,6 @@ body {
   }
 
 
-input[type="file"]:before {
-   content: "UPLOAD ID OR PTU MARKSHEET";
-  position: absolute;
-  left: 220px;
-  top: 10px;
-  color: gray;
-  font-size: 14px;
-  pointer-events: none;
-  }
 
 /* Placeholder text */
 input[type="file"]:before {
