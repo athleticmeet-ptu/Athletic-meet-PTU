@@ -231,6 +231,7 @@ useEffect(() => {
 
     if (hasUrnErrors) {
       alert("One or more URNs are invalid or duplicated. Please fix them before submitting.");
+      setIsSubmitting(false);
       return;
     }
 
