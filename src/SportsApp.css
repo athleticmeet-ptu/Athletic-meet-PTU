@@ -20,11 +20,13 @@ body {
 
 /* Placeholder text */
 input[type="file"]:before {
-  content: "Upload ID or PTU Marksheet (File-size: kbs)";
-    color: gray;
-    position: absolute;
-    margin-left: 275px;
-    margin-top: 0.5px;
+  content: "Upload ID/PTU Marksheet(file size in kb)";
+  color: gray;
+  position: absolute;
+  margin-left: 16rem;
+  margin-top: 5px;
+  font-size: 0.8rem;
+  width: auto;
 }
 
 
@@ -269,6 +271,7 @@ p {
     justify-content: space-between;
     align-items: center;
     padding: 20px 40px;
+    height: 80px;
   }
 
   .college-name {
@@ -285,6 +288,9 @@ p {
 
   .nav-buttons button {
     width: auto;
+  }
+  .athlete-form{
+    width: 580px;
   }
 }
 
@@ -316,6 +322,17 @@ p {
     padding: 12px 20px;
     font-size: 1.1rem;
   }
+  input[type="file"]:before {
+    content: "Upload ID/PTU Marksheet(file size in kb)";
+    color: gray;
+    position: absolute;
+    margin-left: 16rem;
+    margin-top: 5px;
+    font-size: 0.7rem;
+  }
+  .athlete-form{
+    width: 550px;
+  }
 }
 
 /* Below 900px */
@@ -344,5 +361,14 @@ p {
   .nav-buttons button {
     width: 90%;
     font-size: 1rem;
+  }
+  input[type="file"]:before {
+    content: "Upload ID/PTU Marksheet(file size in kb)";
+    color: gray;
+    position: absolute;
+    margin-left: 16rem;
+    margin-top: 5px;
+    font-size: 0.8rem;
+    width: auto;
   }
 }
