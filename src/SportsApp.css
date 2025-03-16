@@ -22,8 +22,7 @@ input[type="file"] {
   width: 200px; /* Adjust width as needed */
   height: 40px;
   color: transparent; /* Hide default text */
-   margin-left: 150px;
-    margin-top: 5px;
+ 
 }
 
 input[type="file"]::file-selector-button {
@@ -34,8 +33,6 @@ input[type="file"]::file-selector-button {
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
-   margin-left: 150px;
-    margin-top: 5px;
 }
 
 input[type="file"]:hover::file-selector-button {
