@@ -292,7 +292,7 @@ function Relayfemale() {
       }
     } catch (error) {
       console.error("Error submitting relay data:", error);
-      console.log("Server error. Please try again later.");
+      alert("Server error. Please try again later. COMPRESS FILE SIZE in KBS AND CHECK AGE NOT BE 0");
     }finally{
     setIsSubmitting(false);}
   };
