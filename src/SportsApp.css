@@ -18,10 +18,10 @@ body {
 
 
  input[type="file"]:before {
-    content: "Date of Birth";
+    content: "UPLOAD ID OR PTU MARKSHEET";
     color: gray;
     position: absolute;
-    margin-left: 150px;
+    margin-left: 300px;
     margin-top: 5px;
   }
 
