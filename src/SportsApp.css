@@ -29,10 +29,6 @@ input[type="file"]:before {
   pointer-events: none;
 }
 
-/* Jab file select ho jaye toh text hat jayega */
-input[type="file"]:valid::after {
-  content: "";
-}
 
 
 
