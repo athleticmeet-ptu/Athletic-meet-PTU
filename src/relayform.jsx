@@ -306,7 +306,7 @@ useEffect(() => {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Server error. Please try again later.");
+      alert("Server error. Please try again later. COMPRESS FILE SIZE AND CHECK AGE NOT BE 0");
     }finally{
      setIsSubmitting(false);}
   };
