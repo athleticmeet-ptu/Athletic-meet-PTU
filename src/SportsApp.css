@@ -15,34 +15,29 @@ body {
     margin-left: 150px;
     margin-top: 5px;
   }
-.file-upload {
-  position: relative;
-  width: 200px; /* Customize width */
-}
 
-.file-upload input[type="file"] {
+
+input[type="file"] {
   position: relative;
-  width: 100%;
+  width: 200px; /* Adjust width as needed */
   height: 40px;
-  opacity: 0; /* Hide actual file input */
-  cursor: pointer;
-  z-index: 2; /* Keep it above pseudo-element */
+  color: transparent; /* Hide default text */
 }
 
-.file-upload::before {
-  content: "Upload ID Card";
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
+input[type="file"]::file-selector-button {
+  content: "Upload ID Card"; /* Placeholder text */
   color: gray;
-  pointer-events: none; /* Ensure clicks go to file input */
-  font-size: 14px;
+  background: #f4f4f4;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.file-upload input[type="file"]:hover + ::before {
-  color: black; /* Change color on hover */
+input[type="file"]:hover::file-selector-button {
+  background: #e4e4e4; /* Change background on hover */
 }
+
 
 
 
