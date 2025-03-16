@@ -22,7 +22,7 @@ body {
 input[type="file"]:before {
   content: "UPLOAD ID OR PTU MARKSHEET";
   position: absolute;
-  left: 220px;
+  left: 200px;
   top: 10px;
   color: gray;
   font-size: 14px;
