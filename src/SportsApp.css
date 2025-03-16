@@ -17,18 +17,40 @@ body {
   }
 
 
-input[type="file"]:before {
-    content: "Upload ID or PTU Marksheet (File size- in kbs)";
-    color: gray;
-    position: absolute;
-    margin-left: 300px;
-    margin-top: 2px;
+input[type="file"] {
+  position: relative;
+  width: 200px; /* Adjust as needed */
+  height: 40px;
+  cursor: pointer;
+  color: transparent; /* Hide default file name */
 }
 
-/* Jab file select ho jaye, text hide ho jaye */
-input[type="file"]:valid:before {
-    content: "";
+input[type="file"]::file-selector-button {
+  background: #f4f4f4;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  color: gray;
 }
+
+/* Placeholder text */
+input[type="file"]::after {
+  content: "UPLOAD ID OR PTU MARKSHEET";
+  position: absolute;
+  left: 220px;
+  top: 10px;
+  color: gray;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+/* Jab file select ho jaye toh text hat jayega */
+input[type="file"]:valid::after {
+  content: "";
+}
+
 
 
 
