@@ -176,7 +176,7 @@ const AdminDashboard = () => {
                             <td>{student.fatherName}</td>
                             <td>{student.age}</td>
                             <td>{student.phoneNumber}</td>
-                            <td>{jersey.jerseyNumber || "Not Allotted"}</td>
+                            <td>{student.jerseyNumber || "Not Allotted"}</td>
                             <td>
                               {student.image ? (
                                 <img
