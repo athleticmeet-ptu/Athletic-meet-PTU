@@ -80,6 +80,7 @@ function Home() {
           <li>The age of the athlete must be <strong>less than 25 years.</strong></li>
           <li>All athlete details must be correct and verifiable.</li>
           <li>For a better experience, <strong>registration should be done on a desktop or laptop.</strong></li>
+           <li>If you fill out the form and only enter the details for Student 1, but not for Student 2, and then submit it, the form will get locked, and you won't be able to add Student 2's entry later.</strong></li>
         </ul>
       </section>
 
