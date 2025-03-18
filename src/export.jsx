@@ -85,8 +85,8 @@ const ExportPage = () => {
           <option value="400M Race-Female">400M Race-Female</option>
           <option value="800M Race-Female">800M Race-Female</option>
           <option value="1500M Race-Female">1500M Race- Female</option>
-          <option value="3000M Race-Female">3000M Race- Female</option>
-          <option value="5000M Race-Female">5000M Race-Female</option>
+          <option value="3000M Race- Female">3000M Race- Female</option>
+          <option value="5000M Race- Female">5000M Race-Female</option>
           <option value="100M Hurdles-Female">100M Hurdles-Female</option>
           <option value="400M Hurdles-Female">400M Hurdles-Female</option>
           <option value="Long Jump-Female">Long Jump-Female</option>
