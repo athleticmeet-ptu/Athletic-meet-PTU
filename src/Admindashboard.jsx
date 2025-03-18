@@ -116,7 +116,7 @@ const AdminDashboard = () => {
               "Hammer Throw-Male",
               // Female Events
               "100M Race-Female", "200M Race-Female", "400M Race-Female",
-              "800M Race-Female", "1500M Race-Female", "3000M Race-Female",
+              "800M Race-Female", "1500M Race- Female", "3000M Race- Female",
               "5000M Race-Female", "100M Hurdles-Female",
               "400M Hurdles-Female", "Long Jump-Female", "Triple Jump-Female",
               "High Jump-Female", "Shot Put-Female", "Discus Throw-Female",
