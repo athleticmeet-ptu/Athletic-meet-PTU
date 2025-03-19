@@ -66,7 +66,7 @@ const AdminDashboard = () => {
     navigate("/admin-login");
   };
 
-  const relayEvents = ["4x100m Relay", "4x400m Relay"];
+  const relayEvents = ["4x100m Relay Female", "4x400m Relay Female","4x100m Relay","4x400m Relay"];
 
   return (
     <div className="bg-light min-vh-100 d-flex flex-column">
