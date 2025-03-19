@@ -57,8 +57,8 @@ const ExportPage = () => {
           <option value="">All Events</option>
           <option value="4x100m Relay">4x100m Relay</option>
           <option value="4x400m Relay">4x400m Relay</option>
-          <option value="4x100m Relay">4x100m Relay Female</option>
-          <option value="4x400m Relay"> 4x400m Relay Female</option>
+          <option value="4x100m Relay Female">4x100m Relay Female</option>
+          <option value="4x400m Relay Female"> 4x400m Relay Female</option>
          
 
           {/* Male Events */}
